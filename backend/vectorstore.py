@@ -7,15 +7,15 @@ import os
 # Use a legal-domain aware embedding model
 # legal-bert is fine-tuned on legal text — much better than generic models
 # for Indian legal documents
-EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-# Note: for production, switch to "nlpaueb/legal-bert-base-uncased"
+EMBEDDING_MODEL = "sentence-transformers/paraphrase-MiniLM-L3-v2"# Note: for production, switch to "nlpaueb/legal-bert-base-uncased"
 # but MiniLM is faster and good enough for demo
 
 class LegalVectorStore:
     def __init__(self, persist_dir="./chroma_db"):
         self.client = chromadb.PersistentClient(path=persist_dir)
-        self.model = SentenceTransformer(EMBEDDING_MODEL)
-        
+        self.model = SentenceTransformer(EMBEDDING_MODEL, device="cpu")
+        self.model.max_seq_length = 256  # reduce from default 384, saves memory
+
     def get_or_create_collection(self, doc_id: str):
         """Each document gets its own collection."""
         return self.client.get_or_create_collection(
