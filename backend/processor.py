@@ -1,7 +1,6 @@
 import re
 from pypdf import PdfReader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 def extract_text_from_pdf(file_bytes: bytes) -> str:
     """
