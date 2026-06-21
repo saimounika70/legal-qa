@@ -1,0 +1,2 @@
+cd ~/Desktop/legal-qa/backend
+echo "python-3.11.9" > runtime.txt
